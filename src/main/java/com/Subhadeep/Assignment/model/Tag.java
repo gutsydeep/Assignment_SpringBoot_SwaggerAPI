@@ -1,34 +1,36 @@
 package com.Subhadeep.Assignment.model;
 
-import javax.persistence.Embeddable;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
-@Embeddable
+@XmlRootElement(name = "Tag")
 public class Tag {
-    private Long ID;
-    private String TagName;
-
     public Tag() {
     }
 
-    public Tag(Long tagID, String tagName) {
-        this.ID = tagID;
-        this.TagName = tagName;
+    private Long id;
+    private String name;
+
+    public Tag(Long id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
-    public Long getID() {
-        return ID;
+    @XmlElement(name = "id")
+    public Long getId() {
+        return id;
     }
 
-    public void setID(Long tagID) {
-        this.ID = tagID;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getTagName() {
-        return TagName;
+    @XmlElement(name = "name")
+    public String getName() {
+        return name;
     }
 
-    public void setTagName(String tagName) {
-        this.TagName = tagName;
+    public void setName(String name) {
+        this.name = name;
     }
 }
-

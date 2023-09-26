@@ -1,35 +1,36 @@
 package com.Subhadeep.Assignment.model;
 
-import javax.persistence.Embeddable;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
-@Embeddable
+@XmlRootElement(name = "Category")
 public class Category {
-    private Integer CategoryId;
-    private String CategoryName;
+    private Long id;
+    private String name;
 
     public Category() {
     }
 
-    public Category(Integer categoryId, String categoryName) {
-        CategoryId = categoryId;
-        CategoryName = categoryName;
+    public Category(Long id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
-    public Integer getCategoryId() {
-        return CategoryId;
+    @XmlElement(name = "id")
+    public Long getId() {
+        return id;
     }
 
-    public void setCategoryId(Integer categoryId) {
-        CategoryId = categoryId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getCategoryName() {
-        return CategoryName;
+    @XmlElement(name = "name")
+    public String getName() {
+        return name;
     }
 
-    public void setCategoryName(String categoryName) {
-        CategoryName = categoryName;
+    public void setName(String name) {
+        this.name = name;
     }
-
 }
-

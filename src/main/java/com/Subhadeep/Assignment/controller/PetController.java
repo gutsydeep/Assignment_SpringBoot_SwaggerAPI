@@ -30,13 +30,6 @@ public class PetController
                 HttpStatus.OK, petService.getPet(PetId));
     }
 
-    // Read All Cloud Vendor Details from DB
-    @GetMapping("/")
-    public List<Pet> getAllPetDetails()
-    {
-        return petService.getAllPets();
-    }
-
     @PostMapping("/")
     public String createPetDetails(@RequestBody Pet pet)
     {
@@ -58,4 +51,3 @@ public class PetController
         return "Pet Deleted Successfully";
     }
 }
-

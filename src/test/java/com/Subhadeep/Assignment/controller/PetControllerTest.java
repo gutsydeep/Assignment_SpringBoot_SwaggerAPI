@@ -3,10 +3,10 @@ package com.Subhadeep.Assignment.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.Subhadeep.Assignment.model.Category;
 import com.Subhadeep.Assignment.model.Pet;
 import com.Subhadeep.Assignment.model.Tag;
 import com.Subhadeep.Assignment.service.PetService;
+import com.Subhadeep.Assignment.model.Category;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,12 +38,16 @@ class PetControllerTest {
     List<Pet> petList = new ArrayList<>();
     String[] Photolist1={"StringU"};
     List<String> photoList1=Arrays.asList(Photolist1);
+    List<Tag> tagL = new ArrayList<>();
+    Tag tag1 =new Tag(0L,"stringT");
 
+    Category cat1=new Category(0L,"string C");
     @BeforeEach
     void setUp() {
-        petOne = new Pet(1L, "doggo", new Category(0, "stringc"),photoList1,new Tag(0L,"stringt"),"available");
+        tagL.add(tag1);
+        petOne = new Pet(1L, "doggo", cat1,photoList1,tagL,"available");
 
-        petTwo = new Pet(2L, "doggo2", new Category(0,"stringu"),photoList1,new Tag(0L,"stringt"),"available");
+        petTwo = new Pet(2L, "doggo2", cat1,photoList1,tagL,"available");
         petList.add(petOne);
         petList.add(petTwo);
     }
@@ -58,12 +62,6 @@ class PetControllerTest {
         this.mockMvc.perform(get("/Pet/1" )).andDo(print()).andExpect(status().isOk());
     }
 
-    @Test
-    void getAllPetDetails() throws  Exception {
-        when(petService.getAllPets()).thenReturn(petList);
-        this.mockMvc.perform(get("/Pet/"))
-                .andDo(print()).andExpect(status().isOk());
-    }
 
     @Test
     void createPetDetails() throws Exception {
@@ -72,7 +70,7 @@ class PetControllerTest {
         ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
         String requestJson=ow.writeValueAsString(petOne);
 
-        when(petService.createPet(petOne)).thenReturn("Success");
+        when(petService.createPet(petOne)).thenReturn(petOne);
         this.mockMvc.perform(post("/Pet/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestJson))
@@ -82,12 +80,12 @@ class PetControllerTest {
     @Test
     void updatePetDetails() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+        mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, true);
         ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
         String requestJson=ow.writeValueAsString(petOne);
 
         when(petService.updatePet(petOne))
-                .thenReturn("Pet Updated Successfully");
+                .thenReturn(petOne);
         this.mockMvc.perform(put("/Pet/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestJson))
@@ -103,4 +101,3 @@ class PetControllerTest {
 
     }
 }
-
